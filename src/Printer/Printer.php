@@ -50,7 +50,7 @@ abstract class Printer
     /**
      * @param string $key
      * @param mixed $default
-     * @return null
+     * @return mixed
      */
     protected function getOption($key, $default = null)
     {
