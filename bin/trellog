@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+use Bigwhoop\Trellog\Console\App;
+use Bigwhoop\Trellog\Console\Commands;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$application = new App();
+$application->run();

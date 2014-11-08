@@ -1,0 +1,29 @@
+{
+    "name": "bigwhoop/trello-changelog",
+    "description": "Generate CHANGELOG files based on Trello lists.",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Philippe Gerber",
+            "email": "philippe@bigwhoop.ch"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "trello/trello": "~0.1",
+        "symfony/console": "~2.5",
+        "symfony/yaml": "~2.5",
+        "phine/path": "~1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bigwhoop\\Trellog\\": "src/",
+            "Bigwhoop\\Trellog\\TestAssets\\": "tests/assets"
+        }
+    },
+    "bin": ["bin/trellog"]
+}
