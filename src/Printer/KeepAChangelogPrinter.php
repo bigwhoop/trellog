@@ -56,9 +56,10 @@ class KeepAChangelogPrinter extends Printer
         $out[] = $this->getOption('intro');
         $out[] = '';
         
+        $whiteList = $this->getOption('versions_whitelist');
+        $blackList = $this->getOption('versions_blacklist');
+        
         foreach ($changeLog->getEntries() as $entry) {
-            $whiteList = $this->getOption('versions_whitelist');
-            $blackList = $this->getOption('versions_blacklist');
             if (!$this->checkWhiteAndBlackLists($entry->version, $whiteList, $blackList)) {
                 continue;
             }
@@ -79,10 +80,11 @@ class KeepAChangelogPrinter extends Printer
      */
     public function printEntry(Entry $entry)
     {
+        $whiteList = $this->getOption('sections_whitelist');
+        $blackList = $this->getOption('sections_blacklist');
+        
         $sectionOuts = [];
         foreach ($entry->getSections() as $section) {
-            $whiteList = $this->getOption('sections_whitelist');
-            $blackList = $this->getOption('sections_blacklist');
             if (!$this->checkWhiteAndBlackLists($section->name, $whiteList, $blackList)) {
                 continue;
             }
