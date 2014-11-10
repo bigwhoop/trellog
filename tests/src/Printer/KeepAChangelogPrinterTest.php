@@ -63,7 +63,7 @@ class KeepAChangelogPrinterTest extends \PHPUnit_Framework_TestCase
         // ---
         
         $entry = new Entry();
-        $entry->version = '1.0.0';
+        $entry->version = '1.0';
         $entry->date = new \DateTime('2014-12-01');
         $changeLog->addEntry($entry);
         
