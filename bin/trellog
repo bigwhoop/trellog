@@ -3,7 +3,25 @@
 use Bigwhoop\Trellog\Console\App;
 use Bigwhoop\Trellog\Console\Commands;
 
-require __DIR__ . '/../vendor/autoload.php';
+$autoloadFilePaths = [
+    __DIR__.'/../vendor/autoload.php',
+    __DIR__.'/../../../autoload.php'
+];
+
+$autoloadFilePath = false;
+foreach ($autoloadFilePaths as $path) {
+    if (file_exists($path)) {
+        $autoloadFilePath = $path;
+        break;
+    }
+}
+
+if (!$autoloadFilePath) {
+    echo "Failed to locate composer's autoload.php.\n";
+    exit(1);
+}
+
+require $autoloadFilePath;
 
 $application = new App();
 $application->run();
