@@ -9,8 +9,8 @@
  */
 namespace Bigwhoop\Trellog\Tests\Mapper;
 
+use Bigwhoop\Trellog\Exception;
 use Bigwhoop\Trellog\Mapper\TrelloListMapper;
-use Bigwhoop\Trellog\Model\ChangeLog;
 use Bigwhoop\Trellog\Model\Entry;
 use Bigwhoop\Trellog\Model\Section;
 use Bigwhoop\Trellog\Model\Item;
@@ -24,6 +24,31 @@ class TrelloListMapperTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->factory = new TrelloListMapper();
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidSectionDefinitions()
+    {
+        return [
+            [[]],
+            [['foo' => 'bar']],
+            [['name' => 'foo']],
+            [['checkItems' => 'foo']],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidItemDefinitions()
+    {
+        return [
+            [[]],
+            [['foo' => 'bar']],
+            [['name']],
+        ];
     }
     
     public function testCreateEntry()
@@ -68,6 +93,17 @@ class TrelloListMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Item::class, $section->getItems()[1]);
         $this->assertSame('Some other feature', $section->getItems()[1]->description);
     }
+
+    /**
+     * @param array $data
+     * @dataProvider invalidSectionDefinitions
+     * @expectedException Exception
+     * @expectedExceptionMessage First argument must be an array having the following keys: name, checkItems
+     */
+    public function testCreateSectionWithInvalidData(array $data)
+    {
+        $this->factory->createSection($data);
+    }
     
     public function testCreateItem()
     {
@@ -75,6 +111,17 @@ class TrelloListMapperTest extends \PHPUnit_Framework_TestCase
         
         $this->assertInstanceOf(Item::class, $item);
         $this->assertSame('Fixed the problem.', $item->description);
+    }
+
+    /**
+     * @param array $data
+     * @dataProvider invalidItemDefinitions
+     * @expectedException Exception
+     * @expectedExceptionMessage First argument must be an array having the following keys: name
+     */
+    public function testCreateItemWithInvalidData(array $data)
+    {
+        $this->factory->createSection($data);
     }
 
     /**

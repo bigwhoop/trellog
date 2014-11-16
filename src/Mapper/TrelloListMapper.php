@@ -13,6 +13,7 @@ use Bigwhoop\Trellog\Model\ChangeLog;
 use Bigwhoop\Trellog\Model\Entry;
 use Bigwhoop\Trellog\Model\Item;
 use Bigwhoop\Trellog\Model\Section;
+use Bigwhoop\Trellog\Util\ArrayArgument;
 use Trello\Model\Card;
 use Trello\Model\Lane;
 
@@ -58,9 +59,7 @@ class TrelloListMapper extends Mapper
      */
     public function createSection(array $checkList)
     {
-        if (!is_array($checkList) || !array_key_exists('name', $checkList) || !array_key_exists('checkItems', $checkList)) {
-            throw new \RuntimeException("First argument must be an array having keys 'name' and 'checkItems'.");
-        }
+        ArrayArgument::requireKeys('First argument', ['name', 'checkItems'], $checkList);
         
         $section = new Section();
         $section->name = $checkList['name'];
@@ -77,9 +76,7 @@ class TrelloListMapper extends Mapper
      */
     public function createItem(array $checkItem)
     {
-        if (!is_array($checkItem) || !array_key_exists('name', $checkItem)) {
-            throw new \RuntimeException("First argument must be an array having key 'name'.");
-        }
+        ArrayArgument::requireKeys('First argument', ['name'], $checkItem);
         
         $item = new Item();
         $item->description = $checkItem['name'];

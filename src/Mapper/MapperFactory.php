@@ -9,9 +9,6 @@
  */
 namespace Bigwhoop\Trellog\Mapper;
 
-use Bigwhoop\Trellog\Config\SourceConfig;
-use Bigwhoop\Trellog\Trello\Client;
-
 final class MapperFactory
 {
     /**
