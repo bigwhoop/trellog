@@ -9,8 +9,7 @@
  */
 namespace Bigwhoop\Trellog\Console\Commands;
 
-use Bigwhoop\Trellog\Model\ChangeLog;
-use Bigwhoop\Trellog\Model\StandardModelFactory;
+use Bigwhoop\Trellog\Mapper\MapperFactory;
 use Bigwhoop\Trellog\Printer\PrinterFactory;
 use Bigwhoop\Trellog\Trello\Client;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,21 +31,10 @@ class Generate extends Command
         $config = $this->getConfig($input, $output);
         
         $client = new Client($config->auth->apiKey, $config->auth->accessToken);
-        $board = $client->getBoard($config->source->boardId);
-        $lists = $board->getLists([
-            'fields' => 'id,name',
-        ]);
         
-        $modelFactory = new StandardModelFactory();
-        
-        $changeLog = new ChangeLog();
-        foreach ($lists as $list) {
-            /** @var \Trello\Model\Lane $list */
-            if ($list->id === $config->source->listId) {
-                $changeLog = $modelFactory->createChangeLog($list);
-                break;
-            }
-        }
+        $mapper = MapperFactory::create($config->mapper->class, $config->mapper->options);
+        $list = $mapper->retrieveList($client, $config->source);
+        $changeLog = $mapper->createChangeLog($list);
         
         $printer = PrinterFactory::create($config->printer->class, $config->printer->options);
         $generatedLog = $printer->printChangeLog($changeLog);

@@ -7,16 +7,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Bigwhoop\Trellog\Model;
+namespace Bigwhoop\Trellog\Mapper;
 
+use Bigwhoop\Trellog\Model\ChangeLog;
+use Bigwhoop\Trellog\Model\Entry;
+use Bigwhoop\Trellog\Model\Item;
+use Bigwhoop\Trellog\Model\Section;
 use Trello\Model\Card;
 use Trello\Model\Lane;
 
-class StandardModelFactory extends ModelFactory
+class TrelloListMapper extends Mapper
 {
     /**
-     * @param Lane $list
-     * @return ChangeLog
+     * {@inheritdoc}
      */
     public function createChangeLog(Lane $list)
     {
@@ -35,8 +38,7 @@ class StandardModelFactory extends ModelFactory
     }
     
     /**
-     * @param Card $card
-     * @return Entry
+     * {@inheritdoc}
      */
     public function createEntry(Card $card)
     {
@@ -52,15 +54,18 @@ class StandardModelFactory extends ModelFactory
     }
     
     /**
-     * @param array $checklist
-     * @return Section
+     * {@inheritdoc}
      */
-    public function createSection(array $checklist)
+    public function createSection(array $checkList)
     {
-        $section = new Section();
-        $section->name = $checklist['name'];
+        if (!is_array($checkList) || !array_key_exists('name', $checkList) || !array_key_exists('checkItems', $checkList)) {
+            throw new \RuntimeException("First argument must be an array having keys 'name' and 'checkItems'.");
+        }
         
-        foreach ($checklist['checkItems'] as $checkItem) {
+        $section = new Section();
+        $section->name = $checkList['name'];
+        
+        foreach ((array)$checkList['checkItems'] as $checkItem) {
             $section->addItem($this->createItem($checkItem));
         }
         
@@ -68,11 +73,14 @@ class StandardModelFactory extends ModelFactory
     }
     
     /**
-     * @param array $checkItem
-     * @return Item
+     * {@inheritdoc}
      */
     public function createItem(array $checkItem)
     {
+        if (!is_array($checkItem) || !array_key_exists('name', $checkItem)) {
+            throw new \RuntimeException("First argument must be an array having key 'name'.");
+        }
+        
         $item = new Item();
         $item->description = $checkItem['name'];
         

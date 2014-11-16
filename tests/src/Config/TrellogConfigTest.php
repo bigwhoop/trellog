@@ -32,6 +32,8 @@ class TrellogConfigTest extends \PHPUnit_Framework_TestCase
         $config->auth->accessToken = 'my-access-token';
         $config->source->boardId = 'my-board-id';
         $config->source->listId = 'my-list-id';
+        $config->mapper->class = 'my-mapper-class';
+        $config->mapper->options = ['my-mapper-option-1' => 'foo', 'my-mapper-option-2' => 'bar'];
         $config->printer->class = 'my-printer-class';
         $config->printer->options = ['my-printer-option-1' => 'foo', 'my-printer-option-2' => 'bar'];
         
@@ -43,6 +45,13 @@ class TrellogConfigTest extends \PHPUnit_Framework_TestCase
                 'source' => [
                 'listId' => 'my-list-id',
                 'boardId' => 'my-board-id',
+            ],
+            'mapper' => [
+                'class' => 'my-mapper-class',
+                'options' => [
+                    'my-mapper-option-1' => 'foo',
+                    'my-mapper-option-2' => 'bar',
+                ],
             ],
             'printer' => [
                 'class' => 'my-printer-class',
@@ -66,6 +75,13 @@ class TrellogConfigTest extends \PHPUnit_Framework_TestCase
                 'listId' => 'my-list-id',
                 'boardId' => 'my-board-id',
             ],
+            'mapper' => [
+                'class' => 'my-mapper-class',
+                'options' => [
+                    'my-mapper-option-1' => 'foo',
+                    'my-mapper-option-2' => 'bar',
+                ],
+            ],
             'printer' => [
                 'class' => 'my-printer-class',
                 'options' => [
@@ -79,6 +95,8 @@ class TrellogConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('my-access-token', $config->auth->accessToken);
         $this->assertSame('my-board-id', $config->source->boardId);
         $this->assertSame('my-list-id', $config->source->listId);
+        $this->assertSame('my-mapper-class', $config->mapper->class);
+        $this->assertSame(['my-mapper-option-1' => 'foo', 'my-mapper-option-2' => 'bar'], $config->mapper->options);
         $this->assertSame('my-printer-class', $config->printer->class);
         $this->assertSame(['my-printer-option-1' => 'foo', 'my-printer-option-2' => 'bar'], $config->printer->options);
     }

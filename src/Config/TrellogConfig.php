@@ -17,6 +17,9 @@ class TrellogConfig extends Config
     /** @var SourceConfig */
     public $source;
     
+    /** @var MapperConfig */
+    public $mapper;
+    
     /** @var PrinterConfig */
     public $printer;
     
@@ -24,6 +27,7 @@ class TrellogConfig extends Config
     {
         $this->auth    = new AuthConfig();
         $this->source  = new SourceConfig();
+        $this->mapper  = new MapperConfig();
         $this->printer = new PrinterConfig();
     }
 }
