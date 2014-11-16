@@ -1,5 +1,7 @@
 # trellog
 
+![slideshow](/slideshow.gif?raw=true)
+
 [![Build Status](https://travis-ci.org/bigwhoop/trellog.svg?branch=master)](https://travis-ci.org/bigwhoop/trellog)
 [![Code Coverage](https://scrutinizer-ci.com/g/bigwhoop/trellog/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bigwhoop/trellog/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bigwhoop/trellog/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bigwhoop/trellog/?branch=master)
@@ -11,14 +13,14 @@ Generate [CHANGELOG](http://keepachangelog.com/) files based on Trello lists.
     composer require "bigwhoop/trellog":"~1.0"
     vendor\bin\trellog init
 
-![Init command presentation](/slideshow_init.gif?raw=true)
+![init command presentation](/slideshow_init.gif?raw=true)
 
 ## Usage
 
     vendor\bin\trellog generate
     vendor\bin\trellog generate > CHANGELOG.md
 
-![Init command presentation](/slideshow_generate.gif?raw=true)
+![generate command presentation](/slideshow_generate.gif?raw=true)
 
 ## Config file
 

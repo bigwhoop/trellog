@@ -20,7 +20,7 @@ class App extends Application
     /**
      * {@inheritdoc}
      */
-    public function __construct($name = 'trellog', $version = '1.0.2')
+    public function __construct($name = 'trellog', $version = '1.0.4')
     {
         parent::__construct($name, $version);
         $this->setCatchExceptions(true);
