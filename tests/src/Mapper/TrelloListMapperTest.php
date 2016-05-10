@@ -14,6 +14,7 @@ use Bigwhoop\Trellog\Mapper\TrelloListMapper;
 use Bigwhoop\Trellog\Model\Entry;
 use Bigwhoop\Trellog\Model\Section;
 use Bigwhoop\Trellog\Model\Item;
+use Bigwhoop\Trellog\Trello\Client;
 use Trello\Model\Card;
 
 class TrelloListMapperTest extends \PHPUnit_Framework_TestCase
@@ -23,7 +24,8 @@ class TrelloListMapperTest extends \PHPUnit_Framework_TestCase
     
     protected function setUp()
     {
-        $this->factory = new TrelloListMapper();
+        $client = $this->getMock(Client::class, [], [], '', false);
+        $this->factory = new TrelloListMapper($client);
     }
 
     /**

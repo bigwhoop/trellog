@@ -22,16 +22,26 @@ use Trello\Model\Lane;
 abstract class Mapper
 {
     use Configurable;
+    
+    /** @var Client */
+    protected $client;
 
     /**
-     * @param Client $trello
+     * @param Client $client
+     */
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
+
+    /**
      * @param SourceConfig $source
      * @return Lane
      * @throws MapperException
      */
-    public function retrieveList(Client $trello, SourceConfig $source)
+    public function retrieveList(SourceConfig $source)
     {
-        $board = $trello->getBoard($source->boardId);
+        $board = $this->client->getBoard($source->boardId);
         $lists = $board->getLists([
             'fields' => 'id,name',
         ]);

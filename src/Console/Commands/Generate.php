@@ -32,8 +32,8 @@ class Generate extends Command
         
         $client = new Client($config->auth->apiKey, $config->auth->accessToken);
         
-        $mapper = MapperFactory::create($config->mapper->class, $config->mapper->options);
-        $list = $mapper->retrieveList($client, $config->source);
+        $mapper = MapperFactory::create($config->mapper->class, $config->mapper->options, $client);
+        $list = $mapper->retrieveList($config->source);
         $changeLog = $mapper->createChangeLog($list);
         
         $printer = PrinterFactory::create($config->printer->class, $config->printer->options);

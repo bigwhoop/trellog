@@ -29,6 +29,7 @@ class TrelloListMapper extends Mapper
         $cards = $list->getCards([
             'fields' => 'id,name,due',
             'checklists' => 'all',
+            'filter' => $this->getOption('include_archived_cards', false) ? 'all' : 'open',
         ]);
         
         foreach ($cards as $card) {
@@ -78,8 +79,23 @@ class TrelloListMapper extends Mapper
     {
         ArrayArgument::requireKeys('First argument', ['name'], $checkItem);
         
+        $description = $checkItem['name'];
+        
+        if ($this->getOption('follow_trello_urls', true)) {
+            $matches = [];
+            if (preg_match('|^https://trello\.com/c/([a-zA-Z0-9]+)/[0-9]+\-|', $checkItem['name'], $matches)) {
+                $cardId = $matches[1];
+                try {
+                    $card = $this->client->getCard($cardId);
+                    $description = $card->name;
+                } catch (\Exception $e) {
+                    // ignore invalid URL
+                }
+            }
+        }
+        
         $item = new Item();
-        $item->description = $checkItem['name'];
+        $item->description = $description;
         
         return $item;
     }

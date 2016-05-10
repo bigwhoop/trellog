@@ -1,7 +1,7 @@
 {
     "name": "bigwhoop/trellog",
     "description": "Generate CHANGELOG files based on Trello lists.",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
         {

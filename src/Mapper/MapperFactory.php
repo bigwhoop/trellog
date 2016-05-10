@@ -9,21 +9,24 @@
  */
 namespace Bigwhoop\Trellog\Mapper;
 
+use Bigwhoop\Trellog\Trello\Client;
+
 final class MapperFactory
 {
     /**
      * @param string $mapperClass
      * @param array $options
+     * @param Client $client
      * @return Mapper
      * @throws \InvalidArgumentException
      */
-    public static function create($mapperClass, array $options)
+    public static function create($mapperClass, array $options, Client $client)
     {
         if (!class_exists($mapperClass, true)) {
             throw new \InvalidArgumentException("Mapper class '$mapperClass' must exist.");
         }
         
-        $obj = new $mapperClass();
+        $obj = new $mapperClass($client);
         if (!($obj instanceof Mapper)) {
             throw new \InvalidArgumentException("Class '" . get_class($obj) . "' must be an instance of '" . Mapper::class . "'.");
         }
